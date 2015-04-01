@@ -3,32 +3,34 @@ using System.Collections;
 
 public class PlayerMotor : MonoBehaviour 
 {
-	public float Speed { 
-		get {
+	//accessor
+	//setter
+	public Vector2 CurrentVelocity
+	{
+		get
+		{
+			return this.rigidbody.velocity;
+		}
+	}
+
+	public float Speed
+	{
+		get
+		{
 			return speed;
 		}
 	}
-
-	public float CurrentSpeed {
-		get {
-			return this.rigidbody.velocity.magnitude;
-		}
-	}
-
 	[SerializeField]
-	private float speed = 5;
-	[SerializeField]
-	private float jumpHeight = 10f;
+	private float speed = 10;
 	[SerializeField]
 	private float gravity = -9.81f;
 
-	private Rigidbody2D rigidbody = null;
-	private Vector2 currentVelocity;
 	private PhysicsCharacterController characterController;
+	private Rigidbody2D rigidbody;
 
 	void Awake() {
-		this.rigidbody = GetComponent<Rigidbody2D>();
 		this.characterController = GetComponent<PhysicsCharacterController>();
+		this.rigidbody = GetComponent<Rigidbody2D>();
 	}
 
 	// Use this for initialization
@@ -41,19 +43,16 @@ public class PlayerMotor : MonoBehaviour
 	
 	}
 
-	public void Move(float x, float y)
+	public void Move(float x, bool jump)
 	{
-		if(this.characterController.IsGrounded)
+		float y = this.rigidbody.velocity.y;
+		if(characterController.IsGrounded)
 		{
-			currentVelocity.y = 0;
+			y = 0;
 		}
-		ApplyGravity();
-		currentVelocity = new Vector2(x * speed, currentVelocity.y);
-		this.rigidbody.velocity = currentVelocity;
+		y += gravity * Time.deltaTime;
+
+		this.rigidbody.velocity = new Vector2(x * speed, y);
 	}
 
-	private void ApplyGravity()
-	{
-		currentVelocity.y += gravity * Time.deltaTime;
-	}
 }

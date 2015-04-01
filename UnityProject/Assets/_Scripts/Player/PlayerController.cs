@@ -20,7 +20,7 @@ public class PlayerController : MonoBehaviour
 	{
 		float horizontal = Input.GetAxis("Horizontal");
 		float vertical = Input.GetAxis("Vertical");
-		motor.Move(horizontal, 0);
+		motor.Move(horizontal, false);
 		if(horizontal < 0 && !isFlipped)
 		{
 			Flip ();

@@ -18,6 +18,6 @@ public class PlayerAnimatorController : MonoBehaviour {
 		if(motor == null)
 			return;
 
-		animator.SetFloat("Speed", motor.CurrentSpeed/ motor.Speed);
+		animator.SetFloat("Speed", Mathf.Abs(motor.CurrentVelocity.x)/motor.Speed);
 	}
 }
