@@ -21,6 +21,8 @@ public class PlayerMotor : MonoBehaviour
 		}
 	}
 	[SerializeField]
+	private float jumpForce = 5;
+	[SerializeField]
 	private float speed = 10;
 	[SerializeField]
 	private float gravity = -9.81f;
@@ -49,6 +51,10 @@ public class PlayerMotor : MonoBehaviour
 		if(characterController.IsGrounded)
 		{
 			y = 0;
+			if(jump)
+			{
+				y = this.jumpForce;
+			}
 		}
 		y += gravity * Time.deltaTime;
 

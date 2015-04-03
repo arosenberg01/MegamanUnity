@@ -12,7 +12,7 @@ public class PlayerController : MonoBehaviour
 
 	// Use this for initialization
 	void Start () {
-	
+		PlayerCamera.instance.SetTarget(this.transform);
 	}
 	
 	// Update is called once per frame
@@ -20,7 +20,12 @@ public class PlayerController : MonoBehaviour
 	{
 		float horizontal = Input.GetAxis("Horizontal");
 		float vertical = Input.GetAxis("Vertical");
-		motor.Move(horizontal, false);
+		if(horizontal > 0)
+			horizontal = 1;
+		else if(horizontal < 0)
+			horizontal = -1;
+
+		motor.Move(horizontal, Input.GetButton("Jump"));
 		if(horizontal < 0 && !isFlipped)
 		{
 			Flip ();
